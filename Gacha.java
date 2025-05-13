@@ -4,17 +4,14 @@ public class Gacha {
     private ArrayList<String> FiveStar;
     private ArrayList<String> FourStar;
     private ArrayList<String> ThreeStar;
-    private static int pity;
 
     public Gacha(ArrayList<String> FiveStar, ArrayList<String> FourStar, ArrayList<String> ThreeStar) {
         this.FiveStar = FiveStar;
         this.FourStar = FourStar;
         this.ThreeStar = ThreeStar;
-        pity = 0;
     }
 
     public static String Pull() {
-        pity ++;
         return "";
     }
 
