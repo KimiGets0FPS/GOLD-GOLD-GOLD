@@ -12,6 +12,9 @@ public class Gacha {
     }
 
     public static String Pull() {
+        // Version; Patch
+        // 5 Star, 4 Star, 3 Star
+        // Specific Characters
         return "";
     }
 
