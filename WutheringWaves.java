@@ -1,35 +1,55 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class WutheringWaves extends Gacha {
-    private ArrayList<String> FiveStar;
-    private ArrayList<String> FourStar;
-    private ArrayList<String> ThreeStar;
+
+    private final ArrayList<String> NonEventFiveStars = new ArrayList<>(Arrays.asList());  // TODO: Add Characters
 
     private static int fiveStarPity = 0;
     private static int fourStarPity = 0;
 
-    public WutheringWaves(ArrayList<String> FiveStar, ArrayList<String> FourStar, ArrayList<String> ThreeStar) {
-        super(FiveStar, FourStar, ThreeStar);
-        this.FiveStar = FiveStar;
-        this.FourStar = FourStar;
-        this.ThreeStar = ThreeStar;
+    private double FiveStarRate;
+    private double FourStarRate;
+
+    public WutheringWaves(ArrayList<String> FiveStars, ArrayList<String> FourStars, ArrayList<String> ThreeStars) {
+        super(FiveStars, FourStars, ThreeStars);
     }
 
-    public static ArrayList<ArrayList<String>> getCharacters() {
-        ArrayList<ArrayList<String>> characters = new ArrayList<>();
-        return characters;
+    public ArrayList<ArrayList<String>> getCharacters() {
+        return super.getCharacters();
     }
 
-    public static void single() {
-        if (fiveStarPity == 80) {
-            fiveStarPity = 0;
+    public ArrayList<String> getFourStars() {
+        return super.getFourStars();
+    }
 
-        }
-        else if (fourStarPity == 10) {
+    public ArrayList<String> getThreeStars() {
+        return super.getThreeStars();
+    }
 
-        }
-        else {
+    public ArrayList<String> getNonEventFiveStars() {
+        return NonEventFiveStars;
+    }
 
+    public static String Pull() {
+        /*
+        TODO: Change output to something like HashMap<String, String[]> where the key is the character name and the
+         values are properties of the character (ie. rarity, event character, etc.)
+        TODO: Add pull functionality based on the list of characters given
+        TODO: Pity system
+         */
+        return "";
+    }
+
+    public static String[] TenPull() {
+        /*
+        TODO: Edit this method based off of the Pull() method above
+        NOTE: Do not edit pity in here; the pity should be changed in the Pull() method
+         */
+        String[] pulls = new String[10];
+        for (int i=0; i < 10; i ++) {
+            pulls[i] = Pull();
         }
+        return pulls;
     }
 }

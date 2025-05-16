@@ -1,8 +1,5 @@
 package CMs;
 
-import java.awt.Color;
-
-
 public class ColorPrint {
     public static final String LIGHT_BLUE_TEXT  = "\u001B[94m";
     public static final String DARK_BLUE_TEXT = "\u001B[34m";
@@ -14,40 +11,42 @@ public class ColorPrint {
         PullAnimation(5);
     }
 
-    public static void cp(String message, String color, boolean nextLine) {  // Color print
+    public static void cp(String message, String color) {  // Color print
         String output = color + message;
-        if (nextLine) {
-            output += "\n";
-        }
         System.out.print(output);
+    }
+
+    public static void cpln(String message, String color) {
+        cp(message + "\n", color);
     }
 
     public static void PullAnimation(int star) throws InterruptedException {
         for (int i=0; i < 8; i++) {
-            cp("█", LIGHT_BLUE_TEXT, false);
+            cpln("█", LIGHT_BLUE_TEXT);
             Thread.sleep(350);
         }
         if (star == 5) {
-            for (int i=0; i < 4; i++) {
-                cp("█", GOLD_TEXT, false);
+            for (int i=0; i < 5; i++) {
+                cpln("█", GOLD_TEXT);
                 Thread.sleep(350);
             }
         }
         if (star == 4) {
-            for (int i=0; i < 4; i++) {
-                cp("█", PURPLE_TEXT, false);
+            for (int i=0; i < 5; i++) {
+                cpln("█", PURPLE_TEXT);
                 Thread.sleep(350);
             }
         }
         if (star == 3) {
-            for (int i=0; i < 4; i++) {
-                cp("█", DARK_BLUE_TEXT, false);
+            for (int i=0; i < 5; i++) {
+                cpln("█", DARK_BLUE_TEXT);
                 Thread.sleep(350);
             }
         }
     }
 
-    public static void clear() { // Works on CodeHS
+    public static void clear() {
+        // Clears the terminal on CodeHS (Works)
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }

@@ -13,7 +13,9 @@ public class Main {
                 break;
             }
             else {
-                System.out.println("Invalid input!");
+                System.out.print("Invalid input!\nPress Enter to continue...");
+                io.nextLine();
+                ColorPrint.clear();
             }
         }
         if (option.equals("hsr")) {
@@ -23,10 +25,18 @@ public class Main {
             simulateWuWa();
         }
     }
+
     public static void simulateHSR() {
-
+        // Get characters before calling this
+        // Version No, Patch No.
+        // 5 Star, 4 Star, 3 Star
+        // Specific Characters
+        HonkaiStarRail hsr = new HonkaiStarRail(null, null, null);
     }
-    public static void simulateWuWa() {
 
+    public static void simulateWuWa() {
+        // Get characters before calling this
+        // Check HoyoCharacters.json before creating the list of characters
+        WutheringWaves wuwa = new WutheringWaves(null, null, null);
     }
 }

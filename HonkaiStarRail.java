@@ -1,26 +1,59 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class HonkaiStarRail extends Gacha {
-    private ArrayList<String> FiveStar;
-    private ArrayList<String> FourStar;
-    private ArrayList<String> ThreeStar;
 
-    // Rates
-    private static int FiveStarPity = 0;
-    private static int FourStarPity = 0;
+    private final ArrayList<String> NonEventFiveStars = new ArrayList<>(Arrays.asList("Bronya", "Himeko", "Bailu", "Gepard", "Welt", "Clara", "Yanqing"));
+
+    private static int fiveStarPity = 0;
+    private static int fourStarPity = 0;
 
     private double FiveStarRate;
     private double FourStarRate;
 
-    public HonkaiStarRail(ArrayList<String> FiveStar, ArrayList<String> FourStar, ArrayList<String> ThreeStar) {
-        super(FiveStar, FourStar, ThreeStar);
-        this.FiveStar = FiveStar;
-        this.FourStar = FourStar;
-        this.ThreeStar = ThreeStar;
+    public HonkaiStarRail(ArrayList<String> FiveStars, ArrayList<String> FourStars, ArrayList<String> ThreeStars) {
+        super(FiveStars, FourStars, ThreeStars);
     }
 
-    public static ArrayList<ArrayList<String>> getCharacters() {
-        ArrayList<ArrayList<String>> characters = new ArrayList<>();
-        return characters;
+    public ArrayList<ArrayList<String>> getCharacters() {
+        return super.getCharacters();
+    }
+
+    public ArrayList<String> getFiveStars() {
+        return super.getFiveStars();
+    }
+
+    public ArrayList<String> getFourStars() {
+        return super.getFourStars();
+    }
+
+    public ArrayList<String> getThreeStars() {
+        return super.getThreeStars();
+    }
+
+    public ArrayList<String> getNonEventFiveStars() {
+        return NonEventFiveStars;
+    }
+
+    public static String Pull() {
+        /*
+        TODO: Change output to something like HashMap<String, String[]> where the key is the character name and the
+         values are properties of the character (ie. rarity, event character, etc.)
+        TODO: Add pull functionality based on the list of characters given
+        TODO: Pity system
+         */
+        return "";
+    }
+
+    public static String[] TenPull() {
+        /*
+        TODO: Edit this method based off of the Pull() method above
+        NOTE: Do not edit pity in here; the pity should be changed in the Pull() method
+         */
+        String[] pulls = new String[10];
+        for (int i=0; i < 10; i ++) {
+            pulls[i] = Pull();
+        }
+        return pulls;
     }
 }
