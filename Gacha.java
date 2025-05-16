@@ -1,11 +1,7 @@
 import java.util.ArrayList;
 
 public class Gacha {
-    private boolean LostFiftyFifty = false;
-
-    // Rates
-    private static int FiveStarPity = 0;
-    private static int FourStarPity = 0;
+    private static boolean LostFiftyFifty = false;
 
     private static ArrayList<String> FiveStars;
     private static ArrayList<String> FourStars;
@@ -21,12 +17,8 @@ public class Gacha {
         return LostFiftyFifty;
     }
 
-    public int getFiveStarPity() {
-        return FiveStarPity;
-    }
-
-    public int getFourStarPity() {
-        return FourStarPity;
+    public void setLostFiftyFifty(boolean lostFiftyFifty) {
+        LostFiftyFifty = lostFiftyFifty;
     }
 
     public ArrayList<ArrayList<String>> getCharacters() {
