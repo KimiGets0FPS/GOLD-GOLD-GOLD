@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Gacha {
     private static boolean LostFiftyFifty = false;
@@ -22,7 +23,7 @@ public class Gacha {
     }
 
     public ArrayList<ArrayList<String>> getCharacters() {
-        ArrayList<ArrayList<String>> characters = new ArrayList<>();
+        ArrayList<ArrayList<String>> characters = new ArrayList<>(Arrays.asList(FiveStars, FourStars, ThreeStars));
         return characters;
     }
 

@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class WutheringWaves extends Gacha {
 
-    private final ArrayList<String> NonEventFiveStars = new ArrayList<>(Arrays.asList());  // TODO: Add Characters
+    private static final ArrayList<String> NonEventFiveStars = new ArrayList<>(Arrays.asList("Encore", "Corpus", "Lingyang", "Verina", "Jianxin"));
 
     private static int fiveStarPity = 0;
     private static int fourStarPity = 0;
@@ -11,10 +11,11 @@ public class WutheringWaves extends Gacha {
     private static double FiveStarRate;
     private static double FourStarRate;
 
+
     public WutheringWaves(ArrayList<String> FiveStars, ArrayList<String> FourStars, ArrayList<String> ThreeStars) {
         super(FiveStars, FourStars, ThreeStars);
-        FiveStarRate = 0.01;
-        FourStarRate = 1.0;
+        FiveStarRate = 0.8;
+        FourStarRate = 6.0;
     }
 
     public ArrayList<ArrayList<String>> getCharacters() {
@@ -34,39 +35,29 @@ public class WutheringWaves extends Gacha {
     }
 
 
-    private static void increaseFiveStarRate() {
-        FiveStarRate += 0.05;
-    }
-
-    private static void increaseFourStarRate() {
-        FourStarRate += 0.05;
-    }
 
     public Character pull() {
         /*
         TODO: Pity system
          */
         double roll = Math.random() * 100 + 1;
-        if (roll <= FiveStarRate || fiveStarPity == 90) {  // Rolled 5 Star or hit Hard Pity
+        if (roll <= FiveStarRate || fiveStarPity == 80) {  // Rolled 5 Star or hit Hard Pity
             // Calculating 50/50
             int fiftyFiftyRoll = (int) (Math.random() * 2);
-
             // Lost 50/50 and haven't lost 50/50 before
             if (fiftyFiftyRoll == 1 && !getLostFiftyFifty()) {
                 setLostFiftyFifty(true);
-                FiveStarRate = 0.01;
                 return new FiveStarCharacter(NonEventFiveStars.get((int) (Math.random() * NonEventFiveStars.size())), 5, false);
             }
             // Guaranteed (by hard pity) or won 50/50
             else {
                 setLostFiftyFifty(false);
                 FiveStarRate = 0.01;
-                return new FiveStarCharacter(getFiveStars().get(0), 5, true);
+                return new FiveStarCharacter(getFiveStars().getFirst(), 5, true);
             }
         }
 
         // We don't get 5 star
-        increaseFiveStarRate();
         fiveStarPity ++;
 
         if (roll <= FourStarRate || fourStarPity == 10) { // Rolled 4 Star or hit Hard Pity
@@ -75,7 +66,6 @@ public class WutheringWaves extends Gacha {
         }
 
         // Doesn't roll anything
-        increaseFourStarRate();
         fourStarPity ++;
 
         return new Character("poo poo", 3);
@@ -93,3 +83,8 @@ public class WutheringWaves extends Gacha {
         return pulls;
     }
 }
+
+
+/*
+y = 99.97 / 1 + e^-k(x - 82.5) + 0.03
+* */

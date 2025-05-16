@@ -5,6 +5,7 @@ public class ColorPrint {
     public static final String DARK_BLUE_TEXT = "\u001B[34m";
     public static final String PURPLE_TEXT = "\u001B[35m";
     public static final String GOLD_TEXT = "\u001B[33m";
+    public static final String GREEN_TEXT = "\u001B[32m";
     public static final String RESET_TEXT = "\u001B[0m";
 
     public static void main(String[] args) throws InterruptedException {  // Testing
@@ -22,24 +23,24 @@ public class ColorPrint {
 
     public static void PullAnimation(int star) throws InterruptedException {
         for (int i=0; i < 8; i++) {
-            cpln("█", LIGHT_BLUE_TEXT);
+            cp("█", LIGHT_BLUE_TEXT);
             Thread.sleep(350);
         }
         if (star == 5) {
             for (int i=0; i < 5; i++) {
-                cpln("█", GOLD_TEXT);
+                cp("█", GOLD_TEXT);
                 Thread.sleep(350);
             }
         }
         if (star == 4) {
             for (int i=0; i < 5; i++) {
-                cpln("█", PURPLE_TEXT);
+                cp("█", PURPLE_TEXT);
                 Thread.sleep(350);
             }
         }
         if (star == 3) {
             for (int i=0; i < 5; i++) {
-                cpln("█", DARK_BLUE_TEXT);
+                cp("█", DARK_BLUE_TEXT);
                 Thread.sleep(350);
             }
         }

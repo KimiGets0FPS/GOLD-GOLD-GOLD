@@ -24,6 +24,7 @@ public class Main {
         else {
             simulateWuWa();
         }
+        ColorPrint.cpln("Thank you for playing!", ColorPrint.GREEN_TEXT);
     }
 
     public static void simulateHSR() {
