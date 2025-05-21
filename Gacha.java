@@ -2,16 +2,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Gacha {
+    private String name;
+
     private static boolean LostFiftyFifty = false;
 
     private static ArrayList<String> FiveStars;
     private static ArrayList<String> FourStars;
     private static ArrayList<String> ThreeStars;
 
-    public Gacha(ArrayList<String> FiveStars, ArrayList<String> FourStars, ArrayList<String> ThreeStars) {
+    public Gacha(String name, ArrayList<String> FiveStars, ArrayList<String> FourStars, ArrayList<String> ThreeStars) {
+        this.name = name;
         Gacha.FiveStars = FiveStars;
         Gacha.FourStars = FourStars;
         Gacha.ThreeStars = ThreeStars;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean getLostFiftyFifty() {
@@ -23,8 +30,7 @@ public class Gacha {
     }
 
     public ArrayList<ArrayList<String>> getCharacters() {
-        ArrayList<ArrayList<String>> characters = new ArrayList<>(Arrays.asList(FiveStars, FourStars, ThreeStars));
-        return characters;
+        return new ArrayList<>(Arrays.asList(FiveStars, FourStars, ThreeStars));
     }
 
     public ArrayList<String> getFiveStars() {

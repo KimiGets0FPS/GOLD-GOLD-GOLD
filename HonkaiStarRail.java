@@ -12,7 +12,7 @@ public class HonkaiStarRail extends Gacha {
     private static double FourStarRate;
 
     public HonkaiStarRail(ArrayList<String> FiveStars, ArrayList<String> FourStars, ArrayList<String> ThreeStars) {
-        super(FiveStars, FourStars, ThreeStars);
+        super("Honkai Star Rail", FiveStars, FourStars, ThreeStars);
         FiveStarRate = 0.01;
         FourStarRate = 1.0;
     }
@@ -54,6 +54,7 @@ public class HonkaiStarRail extends Gacha {
         TODO: Add pull functionality based on the list of characters given
         TODO: Pity system
          */
+        FiveStarRate = 99.97 / (1 + Math.pow(2.71828, -0.8 * (fiveStarPity - 82.5))) + 0.03;
         double roll = Math.random() * 100 + 1;
         if (roll <= FiveStarRate || fiveStarPity == 90) {  // Rolled 5 Star or hit Hard Pity
             // Calculating 50/50

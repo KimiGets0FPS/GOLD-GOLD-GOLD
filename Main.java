@@ -1,133 +1,135 @@
+import CMs.*;
+
 import java.io.*;
-import java.util.HashMap;
-import java.util.StringTokenizer;
+import java.util.*;
 
-class Kattio extends PrintWriter {
-    public Kattio(String fileName) throws IOException {
-        super(new BufferedOutputStream(new FileOutputStream(fileName + ".json")));
-        r = new BufferedReader(new InputStreamReader(new FileInputStream(fileName + ".json")));
-    }
+import org.json.*;
+// https://mvnrepository.com/artifact/org.json/json
 
-    public boolean hasMoreTokens() {
-        return peekToken() != null;
-    }
-
-    public int nextInt() {
-        return Integer.parseInt(nextToken());
-    }
-
-    public double nextDouble() {
-        return Double.parseDouble(nextToken());
-    }
-
-    public long nextLong() {
-        return Long.parseLong(nextToken());
-    }
-
-    public String next() {
-        return nextToken();
-    }
-
-    private final BufferedReader r;
-    private StringTokenizer st;
-    private String token;
-
-    private String peekToken() {
-        if (token == null)
-            try {
-                while (st == null || !st.hasMoreTokens()) {
-                    String line = r.readLine();
-                    if (line == null) return null;
-                    st = new StringTokenizer(line);
-                }
-                token = st.nextToken();
-            } catch (IOException _) { }
-        return token;
-    }
-
-    private String nextToken() {
-        String ans = peekToken();
-        token = null;
-        return ans;
-    }
-}
+import static CMs.ColorPrint.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        simulateHSR();
+    /*
+    TODO: Finish the simulate() methods
+    TODO: Add the following stats: int totalPulls, int fiftyFiftyWins, int fiftyFiftyLosses, ArrayList<Integer> pullsToFiveStar
+    TODO: Add the following methods: void displayStats(), void resetStats(), etc.
+    TODO: Store these data points in a file so it could be seen the next time the program is run
+     */
+
+    public static void main(String[] args) {
+        simulateWuWa();
     }
-//    public static void main(String[] args) {
-//        Scanner io = new Scanner(System.in);
+
+//    public static void main(String[] args) throws IOException {
+//        Kattio io = new Kattio();
 //        String option;
 //        while (true) {
-//            System.out.println("HSR or WuWa: ");
-//            option = io.nextLine().toLowerCase();
+//            System.out.print("HSR or WuWa: ");
+//            option = io.next().toLowerCase();
 //            if (option.equals("hsr") || option.equals("wuwa")) {
 //                break;
 //            }
 //            else {
 //                System.out.print("Invalid input!\nPress Enter to continue...");
 //                io.nextLine();
-//                ColorPrint.clear();
+//                clear();
 //            }
 //        }
+//
+//        clear();
+//
 //        if (option.equals("hsr")) {
 //            simulateHSR();
 //        }
 //        else {
 //            simulateWuWa();
 //        }
-//        ColorPrint.cpln("Thank you for playing!", ColorPrint.GREEN_TEXT);
+//        cpln("Thank you for playing!", ColorPrint.GREEN_TEXT);
 //    }
 
-    public static void simulateHSR() throws IOException {
-        // Get characters before calling this
-        // Version No, Patch No.
-        // 5 Star, 4 Star, 3 Star
-        // Specific Characters
-        HashMap<String, String> banners = parse(readFile("HSRCharacters"));
-        int i=1;
-        for (String key : banners.keySet()) {
-            System.out.println(i + ". " + key);
-            i ++;
-        }
+    public static void simulateHSR() {
+        HashMap<String, HashMap<String, ArrayList<String>>> characters = parseJSON(fileReader("HSRCharacters"));
+
+
 
         HonkaiStarRail hsr = new HonkaiStarRail(null, null, null);
+
+        simulate(hsr);
     }
 
     public static void simulateWuWa() {
-        // Get characters before calling this
-        // Check HSRCharacters.json before creating the list of characters
+        HashMap<String, HashMap<String, ArrayList<String>>> characters = parseJSON(fileReader("WuWaCharacters"));
 
+        Kattio io = new Kattio();
 
-        WutheringWaves wuwa = new WutheringWaves(null, null, null);
-    }
-
-    public static String readFile(String fileName) throws IOException {
-        StringBuilder content = new StringBuilder();
-        Kattio io = new Kattio(fileName);
-        while (io.hasMoreTokens()) {
-            content.append(io.next());
+        String versionChoice;
+        while (true) {
+            displayVersions(getVersions(characters));
+            System.out.print("Enter the version you want to simulate: ");
+            versionChoice = io.next();
+            if (getVersions(characters).contains(versionChoice)) {
+                break;
+            }
+            else {
+                cpln("Invalid input!", ColorPrint.RED_TEXT);
+                cp("Press Enter to continue...", ColorPrint.RESET_TEXT);
+            }
+            clear();
         }
-        return content.toString();
+
+        WutheringWaves wuwa = new WutheringWaves(
+                characters.get(versionChoice).get("FiveStar"),
+                characters.get(versionChoice).get("FourStar"),
+                new ArrayList<>(List.of("poop")));
+
+        simulate(wuwa);
     }
 
-    public static HashMap<String, String> parse(String jsonString) {
-        HashMap<String, String> output = new HashMap<>();
-        jsonString = jsonString.trim();
-        if (jsonString.startsWith("{") && jsonString.endsWith("}")) {
-            jsonString = jsonString.substring(1, jsonString.length() - 1);
-            String[] keyValuePairs = jsonString.split(",");
-            for (String keyValuePair : keyValuePairs) {
-                String[] parts = keyValuePair.split(":");
-                if (parts.length == 2) {
-                    String key = parts[0].trim().replaceAll("\"", "");
-                    String value = parts[1].trim().replaceAll("\"", "");
-                    output.put(key, value);
+    public static ArrayList<String> getVersions(HashMap<String, HashMap<String, ArrayList<String>>> jsonCharacters) {
+        return new ArrayList<>(jsonCharacters.keySet());
+    }
+
+    public static void displayVersions(ArrayList<String> versions) {
+        for (int i=0; i < versions.size(); i ++) {
+            cpln((i+1) + ". " + versions.get(i), ColorPrint.GREEN_TEXT);
+        }
+    }
+
+    public static void simulate(Gacha gacha) {
+        cpln("Welcome to the " + gacha.getName() + " Gacha Simulator!", ColorPrint.GREEN_TEXT);
+        // TODO: FINISH
+    }
+
+    public static String fileReader(String fileName) {
+        StringBuilder jsonString = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName + ".json"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {  // If there is a current line
+                jsonString.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return jsonString.toString();
+    }
+
+    public static HashMap<String, HashMap<String, ArrayList<String>>> parseJSON(String jsonString) {
+        HashMap<String, HashMap<String, ArrayList<String>>> characters = new HashMap<>();
+
+        JSONObject version = new JSONObject(jsonString);
+
+        for (String versionName : version.keySet()) {
+            JSONObject star = version.getJSONObject(versionName);
+            HashMap<String, ArrayList<String>> starCharacters = new HashMap<>();
+            for (String starName : star.keySet()) {
+                starCharacters.put(starName, new ArrayList<>());
+                JSONArray characterArray = star.getJSONArray(starName);
+                for (int i=0; i < characterArray.length(); i++) {
+                    starCharacters.get(starName).add(characterArray.getString(i));
                 }
             }
+            characters.put(versionName, starCharacters);
         }
-        return output;
+        return characters;
     }
-
 }

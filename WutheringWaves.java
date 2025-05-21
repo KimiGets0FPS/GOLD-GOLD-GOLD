@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class WutheringWaves extends Gacha {
-
     private static final ArrayList<String> NonEventFiveStars = new ArrayList<>(Arrays.asList("Encore", "Corpus", "Lingyang", "Verina", "Jianxin"));
 
     private static int fiveStarPity = 0;
@@ -13,7 +12,7 @@ public class WutheringWaves extends Gacha {
 
 
     public WutheringWaves(ArrayList<String> FiveStars, ArrayList<String> FourStars, ArrayList<String> ThreeStars) {
-        super(FiveStars, FourStars, ThreeStars);
+        super("Wuthering Waves", FiveStars, FourStars, ThreeStars);
         FiveStarRate = 0.8;
         FourStarRate = 6.0;
     }
@@ -40,11 +39,10 @@ public class WutheringWaves extends Gacha {
         /*
         TODO: Pity system
          */
-        FiveStarRate = 99.97 / (1 + Math.pow(2.71828, -0.8 * (fiveStarPity - 82.5))) + 0.03;
+        FiveStarRate = 99.2 / (1 + Math.pow(2.71828, -0.6 * (fiveStarPity - 70))) + 0.8;
         double roll = Math.random() * 100 + 1;
         if (roll <= FiveStarRate || fiveStarPity == 80) {  // Rolled 5 Star or hit Hard Pity
             // Calculating 50/50
-            FiveStarRate = 0.8;
             int fiftyFiftyRoll = (int) (Math.random() * 2);
             // Lost 50/50 and haven't lost 50/50 before
             if (fiftyFiftyRoll == 1 && !getLostFiftyFifty()) {
@@ -54,7 +52,6 @@ public class WutheringWaves extends Gacha {
             // Guaranteed (by hard pity) or won 50/50
             else {
                 setLostFiftyFifty(false);
-                FiveStarRate = 0.01;
                 return new FiveStarCharacter(getFiveStars().getFirst(), 5, true);
             }
         }
@@ -84,8 +81,3 @@ public class WutheringWaves extends Gacha {
         return pulls;
     }
 }
-
-
-/*
-y = 99.97 / 1 + e^-k(x - 82.5) + 0.03
-* */

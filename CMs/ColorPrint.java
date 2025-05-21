@@ -6,6 +6,7 @@ public class ColorPrint {
     public static final String PURPLE_TEXT = "\u001B[35m";
     public static final String GOLD_TEXT = "\u001B[33m";
     public static final String GREEN_TEXT = "\u001B[32m";
+    public static final String RED_TEXT = "\u001B[31m";
     public static final String RESET_TEXT = "\u001B[0m";
 
     public static void main(String[] args) throws InterruptedException {  // Testing
