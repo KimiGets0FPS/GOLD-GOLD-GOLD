@@ -23,38 +23,42 @@ public class Main {
     TODO: Add the following methods: void displayStats(), void resetStats(), etc.
     TODO: Store these data points in a file so it could be seen the next time the program is run
      */
+    public static void main(String[] args) throws IOException {
+        cp("Welcome to the ", ColorPrint.GREEN_TEXT);
+        cp("GOLD GOLD GOLD", ColorPrint.GOLD_TEXT);
+        cp(" Gacha Simulator!", ColorPrint.GREEN_TEXT);
+        
+        chooseGame();
 
-    public static void main(String[] args) {
-        simulateHSR();
+        cpln("Thank you for playing!", ColorPrint.GREEN_TEXT);
+        
         io.close();
     }
-//    public static void main(String[] args) throws IOException {
-//        Kattio io = new Kattio();
-//        String option;
-//        while (true) {
-//            System.out.print("HSR or WuWa: ");
-//            option = io.next().toLowerCase();
-//            if (option.equals("hsr") || option.equals("wuwa")) {
-//                break;
-//            }
-//            else {
-//                System.out.print("Invalid input!\nPress Enter to continue...");
-//                io.nextLine();
-//                clear();
-//            }
-//        }
-//
-//        clear();
-//
-//        if (option.equals("hsr")) {
-//            simulateHSR();
-//        }
-//        else {
-//            simulateWuWa();
-//        }
-//        cpln("Thank you for playing!", ColorPrint.GREEN_TEXT);
-//        io.close();
-//    }
+
+    public static void chooseGame() throws IOException {
+        String option;
+        while (true) {
+            System.out.print("HSR or WuWa: ");
+            option = io.next().toLowerCase();
+            if (option.equals("hsr") || option.equals("wuwa")) {
+                break;
+            }
+            else {
+                System.out.print("Invalid input!\nPress Enter to continue...");
+                io.nextLine();
+                clear();
+            }
+        }
+
+        clear();
+
+        if (option.equals("hsr")) {
+            simulateHSR();
+        }
+        else {
+            simulateWuWa();
+        }
+    }
 
     public static void simulateHSR() {
         HashMap<String, HashMap<String, ArrayList<String>>> characters = parseJSON(fileReader("HSRCharacters"));
@@ -111,10 +115,49 @@ public class Main {
         }
     }
 
-    public static void simulate(Gacha gacha) {
-        cpln("Welcome to the " + gacha.getName() + " Gacha Simulator!", ColorPrint.GREEN_TEXT);
-        
-        // TODO: FINISH
+    public static void simulate(Gacha game) throws IOException {
+        if (game.getName().equals("Honkai Star Rail")) {
+            HonkaiStarRail gacha = new HonkaiStarRail(game.getFiveStars(), game.getFourStars(), new ArrayList<>(Arrays.asList("poop")));
+        }
+        else {
+            WutheringWaves gacha = new WutheringWaves(game.getFiveStars(), game.getFourStars(), new ArrayList<>(Arrays.asList("poo")));
+        }
+        while (true) {
+            cpln(
+                """
+                1. Single Pull
+                2. Ten Pull
+                3. View Stats
+                4. Switch Version
+                5. Switch Game
+                6. Quit
+                """, ColorPrint.RESET_TEXT);
+            cp("Your Choice (1-6): ", ColorPrint.GREEN_TEXT);
+            int option = io.nextInt();
+            if (option == 1) {
+                gacha.pull();
+            }
+            else if (option == 2) {
+                gacha.tenPull();
+            }
+            else if (option == 3) {
+                
+            }
+            else if (option == 4) {
+                
+            }
+            else if (option == 5) {
+                chooseGame();
+            }
+            else if (option == 6) {
+                return;
+            }
+            else {
+                cpln("Please enter a valid ", ColorPrint.RED_TEXT);
+                cp("Press Enter to continue...", ColorPrint.RESET_TEXT);
+                clear();
+            }
+        }
     }
 
     public void displayStats() {

@@ -63,13 +63,11 @@ public class HonkaiStarRail extends Gacha {
             // Lost 50/50 and haven't lost 50/50 before
             if (fiftyFiftyRoll == 1 && !getLostFiftyFifty()) {
                 setLostFiftyFifty(true);
-                FiveStarRate = 0.01;
                 return new FiveStarCharacter(NonEventFiveStars.get((int) (Math.random() * NonEventFiveStars.size())), 5, false);
             }
             // Guaranteed (by hard pity) or won 50/50
             else {
                 setLostFiftyFifty(false);
-                FiveStarRate = 0.01;
                 return new FiveStarCharacter(getFiveStars().get(0), 5, true);
             }
         }
