@@ -25,10 +25,9 @@ public class Main {
      */
 
     public static void main(String[] args) {
-        simulateWuWa();
+        simulateHSR();
         io.close();
     }
-
 //    public static void main(String[] args) throws IOException {
 //        Kattio io = new Kattio();
 //        String option;
@@ -95,6 +94,7 @@ public class Main {
             else {
                 cpln("Invalid input!", ColorPrint.RED_TEXT);
                 cp("Press Enter to continue...", ColorPrint.RESET_TEXT);
+                io.next();
             }
             clear();
         }
