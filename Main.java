@@ -10,6 +10,13 @@ import static CMs.ColorPrint.*;
 
 public class Main {
     private static final Kattio io = new Kattio();
+
+    // Stats
+    private static int totalPulls = 0;
+    private static int fiftyFiftyWins = 0;
+    private static int fiftyFiftyLosses = 0;
+    private static ArrayList<Integer> pullsToFiveStar = new ArrayList<>();
+
     /*
     TODO: Finish the simulate() methods
     TODO: Add the following stats: int totalPulls, int fiftyFiftyWins, int fiftyFiftyLosses, ArrayList<Integer> pullsToFiveStar
@@ -108,6 +115,18 @@ public class Main {
         cpln("Welcome to the " + gacha.getName() + " Gacha Simulator!", ColorPrint.GREEN_TEXT);
         
         // TODO: FINISH
+    }
+
+    public void displayStats() {
+
+    }
+
+    public void resetStats() {
+        totalPulls = 0;
+        fiftyFiftyWins = 0;
+        fiftyFiftyLosses = 0;
+        pullsToFiveStar = new ArrayList<>();
+
     }
 
     public static String fileReader(String fileName) {
