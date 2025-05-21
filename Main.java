@@ -9,6 +9,7 @@ import org.json.*;
 import static CMs.ColorPrint.*;
 
 public class Main {
+    private static final Kattio io = new Kattio();
     /*
     TODO: Finish the simulate() methods
     TODO: Add the following stats: int totalPulls, int fiftyFiftyWins, int fiftyFiftyLosses, ArrayList<Integer> pullsToFiveStar
@@ -18,6 +19,7 @@ public class Main {
 
     public static void main(String[] args) {
         simulateWuWa();
+        io.close();
     }
 
 //    public static void main(String[] args) throws IOException {
@@ -45,14 +47,18 @@ public class Main {
 //            simulateWuWa();
 //        }
 //        cpln("Thank you for playing!", ColorPrint.GREEN_TEXT);
+//        io.close();
 //    }
 
     public static void simulateHSR() {
         HashMap<String, HashMap<String, ArrayList<String>>> characters = parseJSON(fileReader("HSRCharacters"));
+        
+        String versionChoice = getVersionChoice(characters);
 
-
-
-        HonkaiStarRail hsr = new HonkaiStarRail(null, null, null);
+        HonkaiStarRail hsr = new HonkaiStarRail(
+                characters.get(versionChoice).get("FiveStar"),
+                characters.get(versionChoice).get("FourStar"),
+                new ArrayList<>(List.of("poop")));
 
         simulate(hsr);
     }
@@ -60,13 +66,22 @@ public class Main {
     public static void simulateWuWa() {
         HashMap<String, HashMap<String, ArrayList<String>>> characters = parseJSON(fileReader("WuWaCharacters"));
 
-        Kattio io = new Kattio();
+        String versionChoice = getVersionChoice(characters);
 
+        WutheringWaves wuwa = new WutheringWaves(
+                characters.get(versionChoice).get("FiveStar"),
+                characters.get(versionChoice).get("FourStar"),
+                new ArrayList<>(List.of("poop")));
+                
+        simulate(wuwa);
+    }
+
+    public static String getVersionChoice(HashMap<String, HashMap<String, ArrayList<String>>> characters) {
         String versionChoice;
         while (true) {
             displayVersions(getVersions(characters));
             System.out.print("Enter the version you want to simulate: ");
-            versionChoice = io.next();
+            versionChoice = io.next().toUpperCase();
             if (getVersions(characters).contains(versionChoice)) {
                 break;
             }
@@ -76,13 +91,7 @@ public class Main {
             }
             clear();
         }
-
-        WutheringWaves wuwa = new WutheringWaves(
-                characters.get(versionChoice).get("FiveStar"),
-                characters.get(versionChoice).get("FourStar"),
-                new ArrayList<>(List.of("poop")));
-
-        simulate(wuwa);
+        return versionChoice;
     }
 
     public static ArrayList<String> getVersions(HashMap<String, HashMap<String, ArrayList<String>>> jsonCharacters) {
@@ -97,6 +106,7 @@ public class Main {
 
     public static void simulate(Gacha gacha) {
         cpln("Welcome to the " + gacha.getName() + " Gacha Simulator!", ColorPrint.GREEN_TEXT);
+        
         // TODO: FINISH
     }
 

@@ -39,10 +39,12 @@ public class WutheringWaves extends Gacha {
         /*
         TODO: Pity system
          */
-        FiveStarRate = 99.2 / (1 + Math.pow(2.71828, -0.6 * (fiveStarPity - 70))) + 0.8;
+        FiveStarRate = 99.2 / (1 + Math.pow(Math.E, -0.6 * (fiveStarPity - 70))) + 0.8;
+        System.out.println(FiveStarRate + " ----- " + fiveStarPity);
         double roll = Math.random() * 100 + 1;
         if (roll <= FiveStarRate || fiveStarPity == 80) {  // Rolled 5 Star or hit Hard Pity
             // Calculating 50/50
+            fiveStarPity = 0;
             int fiftyFiftyRoll = (int) (Math.random() * 2);
             // Lost 50/50 and haven't lost 50/50 before
             if (fiftyFiftyRoll == 1 && !getLostFiftyFifty()) {
