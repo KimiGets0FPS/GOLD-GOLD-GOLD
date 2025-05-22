@@ -41,12 +41,29 @@ public class HonkaiStarRail extends Gacha {
         return NonEventFiveStars;
     }
 
-    private static void increaseFiveStarRate() {
-        FiveStarRate += 0.05;
+    public static int getFiveStarPity() {
+        return fiveStarPity;
     }
 
-    private static void increaseFourStarRate() {
-        FourStarRate += 0.05;
+    public static int getFourStarPity() {
+        return fourStarPity;
+    }
+
+    public static void increaseFiveStarPity() {
+        fiveStarPity++;
+    }
+
+    public static void increaseFourStarPity() {
+        fourStarPity++;
+    }
+
+    public static void resetFiveStarPity() {
+        fiveStarPity = 0;
+        fourStarPity = 0;
+    }
+
+    public static void resetFourStarPity() {
+        fourStarPity = 0;
     }
 
     public Character pull() {
@@ -55,37 +72,7 @@ public class HonkaiStarRail extends Gacha {
         TODO: Pity system
          */
         FiveStarRate = 99.97 / (1 + Math.pow(Math.E, -0.8 * (fiveStarPity - 82.5))) + 0.03;
-        double roll = Math.random() * 100 + 1;
-        if (roll <= FiveStarRate || fiveStarPity == 90) {  // Rolled 5 Star or hit Hard Pity
-            // Calculating 50/50
-            int fiftyFiftyRoll = (int) (Math.random() * 2);
-            fiveStarPity = 0;
-            // Lost 50/50 and haven't lost 50/50 before
-            if (fiftyFiftyRoll == 1 && !getLostFiftyFifty()) {
-                setLostFiftyFifty(true);
-                return new FiveStarCharacter(NonEventFiveStars.get((int) (Math.random() * NonEventFiveStars.size())), 5, false);
-            }
-            // Guaranteed (by hard pity) or won 50/50
-            else {
-                setLostFiftyFifty(false);
-                return new FiveStarCharacter(getFiveStars().get(0), 5, true);
-            }
-        }
-
-        // We don't get 5 star
-        increaseFiveStarRate();
-        fiveStarPity ++;
-
-        if (roll <= FourStarRate || fourStarPity == 10) { // Rolled 4 Star or hit Hard Pity
-            FourStarRate = 1.0;
-            return new Character(getFourStars().get((int) (Math.random() * getFourStars().size())), 4);
-        }
-
-        // Doesn't roll anything
-        increaseFourStarRate();
-        fourStarPity ++;
-
-        return new Character("poo poo", 3);
+        return super.pull(true, FiveStarRate);
     }
 
     public Character[] tenPull() {
