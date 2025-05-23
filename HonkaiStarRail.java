@@ -33,11 +33,11 @@ public class HonkaiStarRail extends Gacha {
         return super.getThreeStars();
     }
 
-    public boolean getLostFiftyFifty() {
-        return super.getLostFiftyFifty();
+    public static boolean getLostFiftyFifty() {
+        return Gacha.getLostFiftyFifty();
     }
 
-    public ArrayList<String> getNonEventFiveStars() {
+    public static ArrayList<String> getNonEventFiveStars() {
         return NonEventFiveStars;
     }
 
@@ -72,7 +72,36 @@ public class HonkaiStarRail extends Gacha {
         TODO: Pity system
          */
         FiveStarRate = 99.97 / (1 + Math.pow(Math.E, -0.8 * (fiveStarPity - 82.5))) + 0.03;
-        return super.pull(true, FiveStarRate);
+        double roll = Math.random() * 100 + 1;
+        if (roll <= FiveStarRate || fiveStarPity == 90) {  // Rolled 5 Star or hit Hard Pity
+            // Calculating 50/50
+            fiveStarPity = 0;
+            fourStarPity = 0;
+            int fiftyFiftyRoll = (int) (Math.random() * 2);
+            // Lost 50/50 and haven't lost 50/50 before
+            if (fiftyFiftyRoll == 1 && !getLostFiftyFifty()) {
+                setLostFiftyFifty(true);
+                return new FiveStarCharacter(NonEventFiveStars.get((int) (Math.random() * NonEventFiveStars.size())), 5, false);
+            }
+            // Guaranteed (by hard pity) or won 50/50
+            else {
+                setLostFiftyFifty(false);
+                return new FiveStarCharacter(getFiveStars().getFirst(), 5, true);
+            }
+        }
+
+        // We don't get 5 star
+        fiveStarPity++;
+
+        if (roll <= FourStarRate || fourStarPity == 10) { // Rolled 4 Star or hit Hard Pity
+            fourStarPity = 0;
+            return new Character(getFourStars().get((int) (Math.random() * getFourStars().size())), 4);
+        }
+
+        // Doesn't roll anything
+        fourStarPity++;
+
+        return new Character("poo poo", 3);
     }
 
     public Character[] tenPull() {

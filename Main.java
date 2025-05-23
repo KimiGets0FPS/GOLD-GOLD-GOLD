@@ -115,12 +115,12 @@ public class Main {
         }
     }
 
-    public static void simulate(Gacha game) throws IOException {
-        if (game.getName().equals("Honkai Star Rail")) {
-            HonkaiStarRail gacha = new HonkaiStarRail(game.getFiveStars(), game.getFourStars(), new ArrayList<>(Arrays.asList("poop")));
+    public static void simulate(Gacha gacha) throws IOException {
+        if (gacha.getName().equals("Honkai Star Rail")) {
+            HonkaiStarRail pop = new HonkaiStarRail(gacha.getFiveStars(), gacha.getFourStars(), new ArrayList<>(Arrays.asList("poop")));
         }
         else {
-            WutheringWaves gacha = new WutheringWaves(game.getFiveStars(), game.getFourStars(), new ArrayList<>(Arrays.asList("poo")));
+            WutheringWaves pop = new WutheringWaves(gacha.getFiveStars(), gacha.getFourStars(), new ArrayList<>(Arrays.asList("poo")));
         }
         while (true) {
             cpln(

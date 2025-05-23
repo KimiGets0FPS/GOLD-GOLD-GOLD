@@ -17,19 +17,19 @@ public class WutheringWaves extends Gacha {
         FourStarRate = 6.0;
     }
 
-    public ArrayList<ArrayList<String>> getCharacters() {
+    public static ArrayList<ArrayList<String>> getCharacters() {
         return super.getCharacters();
     }
 
-    public ArrayList<String> getFourStars() {
+    public static ArrayList<String> getFourStars() {
         return super.getFourStars();
     }
 
-    public ArrayList<String> getThreeStars() {
+    public static ArrayList<String> getThreeStars() {
         return super.getThreeStars();
     }
 
-    public ArrayList<String> getNonEventFiveStars() {
+    public static ArrayList<String> getNonEventFiveStars() {
         return NonEventFiveStars;
     }
 
@@ -60,15 +60,44 @@ public class WutheringWaves extends Gacha {
 
 
 
-    public Character pull() {
+    public static Character pull() {
         /*
         TODO: Pity system
          */
         FiveStarRate = 99.2 / (1 + Math.pow(Math.E, -0.6 * (fiveStarPity - 70))) + 0.8;
-        return super.pull(false, FiveStarRate);
+        double roll = Math.random() * 100 + 1;
+        if (roll <= FiveStarRate || fiveStarPity == 80) {  // Rolled 5 Star or hit Hard Pity
+            // Calculating 50/50
+            fiveStarPity = 0;
+            fourStarPity = 0;
+            int fiftyFiftyRoll = (int) (Math.random() * 2);
+            // Lost 50/50 and haven't lost 50/50 before
+            if (fiftyFiftyRoll == 1 && !getLostFiftyFifty()) {
+                setLostFiftyFifty(true);
+                return new FiveStarCharacter(NonEventFiveStars.get((int) (Math.random() * NonEventFiveStars.size())), 5, false);
+            }
+            // Guaranteed (by hard pity) or won 50/50
+            else {
+                setLostFiftyFifty(false);
+                return new FiveStarCharacter(getFiveStars().getFirst(), 5, true);
+            }
+        }
+
+        // We don't get 5 star
+        fiveStarPity++;
+
+        if (roll <= FourStarRate || fourStarPity == 10) { // Rolled 4 Star or hit Hard Pity
+            fourStarPity = 0;
+            return new Character(getFourStars().get((int) (Math.random() * getFourStars().size())), 4);
+        }
+
+        // Doesn't roll anything
+        fourStarPity++;
+
+        return new Character("poo poo", 3);
     }
 
-    public Character[] tenPull() {
+    public static Character[] tenPull() {
         /*
         TODO: Edit this method based off of the Pull() method above
         NOTE: Do not edit pity in here; the pity should be changed in the Pull() method
