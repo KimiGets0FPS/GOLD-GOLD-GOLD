@@ -40,7 +40,7 @@ public class Main {
         while (true) {
             System.out.print("HSR or WuWa: ");
             option = io.next().toLowerCase();
-            if (option.equals("hsr") || option.equals("wuwa")) {
+            if (option.equalsIgnoreCase("hsr") || option.equalsIgnoreCase("wuwa")) {
                 break;
             }
             else {
@@ -69,8 +69,12 @@ public class Main {
                 characters.get(versionChoice).get("FiveStar"),
                 characters.get(versionChoice).get("FourStar"),
                 new ArrayList<>(List.of("poop")));
-
-        simulate(hsr);
+        try {
+            simulate(hsr);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void simulateWuWa() {
@@ -82,8 +86,12 @@ public class Main {
                 characters.get(versionChoice).get("FiveStar"),
                 characters.get(versionChoice).get("FourStar"),
                 new ArrayList<>(List.of("poop")));
-                
-        simulate(wuwa);
+        try {
+            simulate(wuwa);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static String getVersionChoice(HashMap<String, HashMap<String, ArrayList<String>>> characters) {
@@ -141,10 +149,18 @@ public class Main {
                 gacha.tenPull();
             }
             else if (option == 3) {
-                
+                clear();
+                System.out.print(); //Print out Wuwa and Hsr stats seperate - pity 5 stars 4 stars total pulls 50/50 wins
+
             }
             else if (option == 4) {
-                
+                if (gacha.getName().equals("Honkai Star Rail")) {
+                    simulateHSR();
+                }
+                else {
+                    simulateWuWa();
+                }
+                return;
             }
             else if (option == 5) {
                 chooseGame();
