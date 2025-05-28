@@ -14,4 +14,8 @@ public class Character {
     public int getRarity() {
         return rarity;
     }
+
+    public String toString() {
+        return name + " - " + rarity + " stars";
+    }
 }

@@ -10,6 +10,12 @@ public class WutheringWaves extends Gacha {
     private static double FiveStarRate;
     private static double FourStarRate;
 
+    private static double avgFiveStar = 0;
+    private static int totalFiveStars = 0;
+
+    private static int fiftyFiftyWon = 0;
+    private static int fiftyFiftyLost = 0;
+
 
     public WutheringWaves(ArrayList<String> FiveStars, ArrayList<String> FourStars, ArrayList<String> ThreeStars) {
         super("Wuthering Waves", FiveStars, FourStars, ThreeStars);
@@ -17,15 +23,15 @@ public class WutheringWaves extends Gacha {
         FourStarRate = 6.0;
     }
 
-    public static ArrayList<ArrayList<String>> getCharacters() {
+    public ArrayList<ArrayList<String>> getCharacters() {
         return super.getCharacters();
     }
 
-    public static ArrayList<String> getFourStars() {
+    public  ArrayList<String> getFourStars() {
         return super.getFourStars();
     }
 
-    public static ArrayList<String> getThreeStars() {
+    public  ArrayList<String> getThreeStars() {
         return super.getThreeStars();
     }
 
@@ -40,6 +46,12 @@ public class WutheringWaves extends Gacha {
     public static int getFourStarPity() {
         return fourStarPity;
     }
+
+    public static double getAvgFiveStar() {return avgFiveStar;}
+
+    public static int getFiftyFiftyWon() {return fiftyFiftyWon;}
+
+    public static int getFiftyFiftyLost() {return fiftyFiftyLost;}
 
     public static void increaseFiveStarPity() {
         fiveStarPity++;
@@ -60,31 +72,36 @@ public class WutheringWaves extends Gacha {
 
 
 
-    public static Character pull() {
+    public Character pull() {
         /*
         TODO: Pity system
          */
+        fiveStarPity++;
+        fourStarPity++;
         FiveStarRate = 99.2 / (1 + Math.pow(Math.E, -0.6 * (fiveStarPity - 70))) + 0.8;
         double roll = Math.random() * 100 + 1;
         if (roll <= FiveStarRate || fiveStarPity == 80) {  // Rolled 5 Star or hit Hard Pity
             // Calculating 50/50
+            totalFiveStars++;
+            avgFiveStar = (avgFiveStar + fiveStarPity) / totalFiveStars;
             fiveStarPity = 0;
             fourStarPity = 0;
             int fiftyFiftyRoll = (int) (Math.random() * 2);
             // Lost 50/50 and haven't lost 50/50 before
             if (fiftyFiftyRoll == 1 && !getLostFiftyFifty()) {
                 setLostFiftyFifty(true);
+                fiftyFiftyWon++;
                 return new FiveStarCharacter(NonEventFiveStars.get((int) (Math.random() * NonEventFiveStars.size())), 5, false);
             }
             // Guaranteed (by hard pity) or won 50/50
             else {
                 setLostFiftyFifty(false);
+                fiftyFiftyLost++;
                 return new FiveStarCharacter(getFiveStars().getFirst(), 5, true);
             }
         }
 
         // We don't get 5 star
-        fiveStarPity++;
 
         if (roll <= FourStarRate || fourStarPity == 10) { // Rolled 4 Star or hit Hard Pity
             fourStarPity = 0;
@@ -92,12 +109,11 @@ public class WutheringWaves extends Gacha {
         }
 
         // Doesn't roll anything
-        fourStarPity++;
 
         return new Character("poo poo", 3);
     }
 
-    public static Character[] tenPull() {
+    public  Character[] tenPull() {
         /*
         TODO: Edit this method based off of the Pull() method above
         NOTE: Do not edit pity in here; the pity should be changed in the Pull() method
