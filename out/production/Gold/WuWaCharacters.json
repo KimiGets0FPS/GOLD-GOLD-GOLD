@@ -1,11 +1,18 @@
 {
-  "V3.2P2" : {
-    "FiveStar": [
-      "test1",
-      "test2"
+  "V2.3P2" : {
+    "FiveStar" : [
+      "Ciaccona"
     ],
     "FourStar": [
-      "boom"
+      "Danjin", "Yangyang", "Mortefi"
+    ]
+  },
+  "V2.3P1" : {
+    "FiveStar": [
+      "Zani"
+    ],
+    "FourStar": [
+      "Lumi", "Taoqi", "Yuanwu"
     ]
   }
 }

@@ -144,25 +144,41 @@ public class Main {
             int option = io.nextInt();
             if (option == 1) {
                 clear();
-                Character temp = gacha.pull();
-                System.out.println(temp.toString());
+                Character c = gacha.pull();
+                if (c.getRarity() == 5) {
+                    cpln(c.toString(), GOLD_TEXT);
+                }
+                else if (c.getRarity() == 4) {
+                    cpln(c.toString(), PURPLE_TEXT);
+                } else {
+                    cpln(c.toString(), LIGHT_BLUE_TEXT);
+                }
             }
             else if (option == 2) {
                 clear();
                 Character[] temp = gacha.tenPull();
                 for (Character c : temp) {
-                    System.out.println(c.toString());
+                    if (c.getRarity() == 5) {
+                        cpln(c.toString(), GOLD_TEXT);
+                    }
+                    else if (c.getRarity() == 4) {
+                        cpln(c.toString(), PURPLE_TEXT);
+                    } else {
+                        cpln(c.toString(), LIGHT_BLUE_TEXT);
+                    }
                 }
             }
             else if (option == 3) {
                 clear();
                 System.out.println("Honkai Star Rail Stats:");//Print out Wuwa and Hsr stats seperate - pity 5 stars 4 stars total pulls 50/50 wins
                 System.out.println("Pity: " + HonkaiStarRail.getFiveStarPity());
+                System.out.println("Total Pity: " + HonkaiStarRail.getTotalPity());
                 System.out.println("Average Five Star Pity: " + HonkaiStarRail.getAvgFiveStar());
                 System.out.println("50/50 Wins: " + HonkaiStarRail.getFiftyFiftyWon());
                 System.out.println("50/50 Lost: " + HonkaiStarRail.getFiftyFiftyLost());
                 System.out.println("\nWuthering Waves Stats:");
                 System.out.println("Pity: " + WutheringWaves.getFiveStarPity());
+                System.out.println("Total Pity: " + WutheringWaves.getTotalPity());
                 System.out.println("Average Five Star Pity: " + WutheringWaves.getAvgFiveStar());
                 System.out.println("50/50 Wins: " + WutheringWaves.getFiftyFiftyWon());
                 System.out.println("50/50 Lost: " + WutheringWaves.getFiftyFiftyLost());

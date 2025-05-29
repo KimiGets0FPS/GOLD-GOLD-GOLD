@@ -2,10 +2,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class WutheringWaves extends Gacha {
-    private static final ArrayList<String> NonEventFiveStars = new ArrayList<>(Arrays.asList("Encore", "Corpus", "Lingyang", "Verina", "Jianxin"));
+    private static final ArrayList<String> NonEventFiveStars = new ArrayList<>(Arrays.asList("Encore", "Calcharo", "Lingyang", "Verina", "Jianxin"));
 
     private static int fiveStarPity = 0;
     private static int fourStarPity = 0;
+    private static int totalPity = 0;
 
     private static double FiveStarRate;
     private static double FourStarRate;
@@ -47,6 +48,8 @@ public class WutheringWaves extends Gacha {
         return fourStarPity;
     }
 
+    public static int getTotalPity() {return totalPity;}
+
     public static double getAvgFiveStar() {return avgFiveStar;}
 
     public static int getFiftyFiftyWon() {return fiftyFiftyWon;}
@@ -78,12 +81,13 @@ public class WutheringWaves extends Gacha {
          */
         fiveStarPity++;
         fourStarPity++;
+        totalPity++;
         FiveStarRate = 99.2 / (1 + Math.pow(Math.E, -0.6 * (fiveStarPity - 70))) + 0.8;
         double roll = Math.random() * 100 + 1;
         if (roll <= FiveStarRate || fiveStarPity == 80) {  // Rolled 5 Star or hit Hard Pity
             // Calculating 50/50
             totalFiveStars++;
-            avgFiveStar = (avgFiveStar + fiveStarPity) / totalFiveStars;
+            avgFiveStar = (double) totalPity / totalFiveStars;
             fiveStarPity = 0;
             fourStarPity = 0;
             int fiftyFiftyRoll = (int) (Math.random() * 2);

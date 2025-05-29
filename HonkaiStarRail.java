@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class HonkaiStarRail extends Gacha {
     private static int fiveStarPity = 0;
     private static int fourStarPity = 0;
+    private static int totalPity = 0;
 
     private static final ArrayList<String> NonEventFiveStars = new ArrayList<>(Arrays.asList("Bronya", "Himeko", "Bailu", "Gepard", "Welt", "Clara", "Yanqing"));
 
@@ -19,8 +20,8 @@ public class HonkaiStarRail extends Gacha {
 
     public HonkaiStarRail(ArrayList<String> FiveStars, ArrayList<String> FourStars, ArrayList<String> ThreeStars) {
         super("Honkai Star Rail", FiveStars, FourStars, ThreeStars);
-        FiveStarRate = 0.01;
-        FourStarRate = 1.0;
+        FiveStarRate = 0.03;
+        FourStarRate = 5.1;
     }
 
     public ArrayList<ArrayList<String>> getCharacters() {
@@ -55,6 +56,8 @@ public class HonkaiStarRail extends Gacha {
         return fourStarPity;
     }
 
+    public static int getTotalPity() {return totalPity;}
+
     public static double getAvgFiveStar() {return avgFiveStar;}
 
     public static int getFiftyFiftyWon() {return fiftyFiftyWon;}
@@ -85,12 +88,13 @@ public class HonkaiStarRail extends Gacha {
          */
         fiveStarPity++;
         fourStarPity++;
+        totalPity++;
         FiveStarRate = 99.97 / (1 + Math.pow(Math.E, -0.8 * (fiveStarPity - 82.5))) + 0.03;
         double roll = Math.random() * 100 + 1;
         if (roll <= FiveStarRate || fiveStarPity == 90) {  // Rolled 5 Star or hit Hard Pity
             // Calculating 50/50
             totalFiveStars++;
-            avgFiveStar = (avgFiveStar + fiveStarPity) / totalFiveStars;
+            avgFiveStar = (double) totalPity / totalFiveStars;
             fiveStarPity = 0;
             fourStarPity = 0;
             int fiftyFiftyRoll = (int) (Math.random() * 2);
