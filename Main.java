@@ -26,12 +26,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
         cp("Welcome to the ", ColorPrint.GREEN_TEXT);
         cp("GOLD GOLD GOLD", ColorPrint.GOLD_TEXT);
-        cp(" Gacha Simulator!", ColorPrint.GREEN_TEXT);
-        
+        cpln(" Gacha Simulator!", ColorPrint.GREEN_TEXT);
+
         chooseGame();
 
         cpln("Thank you for playing!", ColorPrint.GREEN_TEXT);
-        
+
         io.close();
     }
 
@@ -62,13 +62,16 @@ public class Main {
 
     public static void simulateHSR() {
         HashMap<String, HashMap<String, ArrayList<String>>> characters = parseJSON(fileReader("HSRCharacters"));
-        
+
         String versionChoice = getVersionChoice(characters);
+
+        ArrayList<String> a = new ArrayList<>();
+        a.add("poop");
 
         HonkaiStarRail hsr = new HonkaiStarRail(
                 characters.get(versionChoice).get("FiveStar"),
                 characters.get(versionChoice).get("FourStar"),
-                new ArrayList<>(List.of("poop")));
+                a);
         try {
             simulate(hsr);
         }
@@ -82,10 +85,13 @@ public class Main {
 
         String versionChoice = getVersionChoice(characters);
 
+        ArrayList<String> a = new ArrayList<>();
+        a.add("poop");
+
         WutheringWaves wuwa = new WutheringWaves(
                 characters.get(versionChoice).get("FiveStar"),
                 characters.get(versionChoice).get("FourStar"),
-                new ArrayList<>(List.of("poop")));
+                a);
         try {
             simulate(wuwa);
         }
@@ -123,54 +129,29 @@ public class Main {
         }
     }
 
-    public static void simulate(Gacha gacha) throws IOException {
-        if (gacha.getName().equals("Honkai Star Rail")) {
-            HonkaiStarRail pop = new HonkaiStarRail(gacha.getFiveStars(), gacha.getFourStars(), new ArrayList<>(Arrays.asList("poop")));
-        }
-        else {
-            WutheringWaves pop = new WutheringWaves(gacha.getFiveStars(), gacha.getFourStars(), new ArrayList<>(Arrays.asList("poo")));
-        }
+    public static void simulate(Gacha gacha) throws IOException, InterruptedException {
         while (true) {
             cpln(
-                """
-                1. Single Pull
-                2. Ten Pull
-                3. View Stats
-                4. Switch Version
-                5. Switch Game
-                6. Quit
-                """, ColorPrint.RESET_TEXT);
+                    "1. Single Pull\n2. Ten Pull\n3. View Stats\n4. Switch Version\n5. Switch Game\n6. Quit\n", ColorPrint.RESET_TEXT);
             cp("Your Choice (1-6): ", ColorPrint.GREEN_TEXT);
             int option = io.nextInt();
             if (option == 1) {
                 clear();
-                Character c = gacha.pull();
-                if (c.getRarity() == 5) {
-                    cpln(c.toString(), GOLD_TEXT);
-                }
-                else if (c.getRarity() == 4) {
-                    cpln(c.toString(), PURPLE_TEXT);
-                } else {
-                    cpln(c.toString(), LIGHT_BLUE_TEXT);
-                }
+                Character pull = gacha.pull();
+                printPullAnimation(getStar(pull));
+                printCharacter(pull);
             }
             else if (option == 2) {
                 clear();
-                Character[] temp = gacha.tenPull();
-                for (Character c : temp) {
-                    if (c.getRarity() == 5) {
-                        cpln(c.toString(), GOLD_TEXT);
-                    }
-                    else if (c.getRarity() == 4) {
-                        cpln(c.toString(), PURPLE_TEXT);
-                    } else {
-                        cpln(c.toString(), LIGHT_BLUE_TEXT);
-                    }
+                Character[] pulls = gacha.tenPull();
+                printPullAnimation(getStar(pulls));
+                for (Character pull : pulls) {
+                    printCharacter(pull);
                 }
             }
             else if (option == 3) {
                 clear();
-                System.out.println("Honkai Star Rail Stats:");//Print out Wuwa and Hsr stats seperate - pity 5 stars 4 stars total pulls 50/50 wins
+                System.out.println("Honkai Star Rail Stats:");  //Print out Wuwa and Hsr stats seperate - pity 5 stars 4 stars total pulls 50/50 wins
                 System.out.println("Pity: " + HonkaiStarRail.getFiveStarPity());
                 System.out.println("Total Pity: " + HonkaiStarRail.getTotalPity());
                 System.out.println("Average Five Star Pity: " + HonkaiStarRail.getAvgFiveStar());
@@ -203,6 +184,38 @@ public class Main {
                 cp("Press Enter to continue...", ColorPrint.RESET_TEXT);
                 clear();
             }
+        }
+    }
+
+    public static void printPullAnimation(int star) throws InterruptedException {
+        ColorPrint.PullAnimation(star);
+        System.out.println();
+    }
+
+    public static int getStar(Character character) {
+        return character.getRarity();
+    }
+
+    public static int getStar(Character[] characters) {
+        Character output = characters[0];
+        for (int i=1; i < characters.length; i++) {
+            if (characters[i].getRarity() > output.getRarity()) {
+                output = characters[i];
+            }
+        }
+        return output.getRarity();
+    }
+
+    public static void printCharacter(Character character) {
+
+        if (character.getRarity() == 5) {
+            cpln(character.toString(), ColorPrint.GOLD_TEXT);
+        }
+        else if (character.getRarity() == 4) {
+            cpln(character.toString(), ColorPrint.PURPLE_TEXT);
+        }
+        else {
+            cpln(character.toString(), ColorPrint.LIGHT_BLUE_TEXT);
         }
     }
 
