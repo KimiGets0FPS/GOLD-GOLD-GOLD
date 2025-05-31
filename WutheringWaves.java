@@ -23,18 +23,6 @@ public class WutheringWaves extends Gacha {
         FourStarRate = 6.0;
     }
 
-    public ArrayList<ArrayList<String>> getCharacters() {
-        return super.getCharacters();
-    }
-
-    public  ArrayList<String> getFourStars() {
-        return super.getFourStars();
-    }
-
-    public  ArrayList<String> getThreeStars() {
-        return super.getThreeStars();
-    }
-
     public static int getFiveStarPity() {
         return fiveStarPity;
     }
@@ -65,6 +53,18 @@ public class WutheringWaves extends Gacha {
 
         fiftyFiftyWon = 0;
         fiftyFiftyLost = 0;
+    }
+
+    public ArrayList<ArrayList<String>> getCharacters() {
+        return super.getCharacters();
+    }
+
+    public ArrayList<String> getFourStars() {
+        return super.getFourStars();
+    }
+
+    public ArrayList<String> getThreeStars() {
+        return super.getThreeStars();
     }
 
     public Character pull() {
@@ -108,9 +108,9 @@ public class WutheringWaves extends Gacha {
         return new Character("poo poo", 3);
     }
 
-    public  Character[] tenPull() {
+    public Character[] tenPull() {
         Character[] pulls = new Character[10];
-        for (int i=0; i < 10; i ++) {
+        for (int i = 0; i < 10; i++) {
             pulls[i] = pull();
         }
         return pulls;

@@ -23,22 +23,6 @@ public class HonkaiStarRail extends Gacha {
         FourStarRate = 5.1;
     }
 
-    public ArrayList<ArrayList<String>> getCharacters() {
-        return super.getCharacters();
-    }
-
-    public ArrayList<String> getFiveStars() {
-        return super.getFiveStars();
-    }
-
-    public ArrayList<String> getFourStars() {
-        return super.getFourStars();
-    }
-
-    public ArrayList<String> getThreeStars() {
-        return super.getThreeStars();
-    }
-
     public static boolean getLostFiftyFifty() {
         return Gacha.getLostFiftyFifty();
     }
@@ -73,6 +57,22 @@ public class HonkaiStarRail extends Gacha {
 
         fiftyFiftyWon = 0;
         fiftyFiftyLost = 0;
+    }
+
+    public ArrayList<ArrayList<String>> getCharacters() {
+        return super.getCharacters();
+    }
+
+    public ArrayList<String> getFiveStars() {
+        return super.getFiveStars();
+    }
+
+    public ArrayList<String> getFourStars() {
+        return super.getFourStars();
+    }
+
+    public ArrayList<String> getThreeStars() {
+        return super.getThreeStars();
     }
 
     public Character pull() {
@@ -119,7 +119,7 @@ public class HonkaiStarRail extends Gacha {
 
     public Character[] tenPull() {
         Character[] pulls = new Character[10];
-        for (int i=0; i < 10; i ++) {
+        for (int i = 0; i < 10; i++) {
             pulls[i] = pull();
         }
         return pulls;

@@ -3,13 +3,11 @@ import java.util.Arrays;
 
 public class Gacha {
 
-    private final String name;
-
     private static boolean LostFiftyFifty = false;
-
     private static ArrayList<String> FiveStars;
     private static ArrayList<String> FourStars;
     private static ArrayList<String> ThreeStars;
+    private final String name;
 
     public Gacha(String name, ArrayList<String> FiveStars, ArrayList<String> FourStars, ArrayList<String> ThreeStars) {
         this.name = name;
@@ -18,16 +16,16 @@ public class Gacha {
         Gacha.ThreeStars = ThreeStars;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public static boolean getLostFiftyFifty() {
         return LostFiftyFifty;
     }
 
     public static void setLostFiftyFifty(boolean lostFiftyFifty) {
         LostFiftyFifty = lostFiftyFifty;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public ArrayList<ArrayList<String>> getCharacters() {
