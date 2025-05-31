@@ -1,6 +1,6 @@
 public class Character {
-    private String name;
-    private int rarity;
+    private final String name;
+    private final int rarity;
 
     public Character(String name, int rarity) {
         this.name = name;

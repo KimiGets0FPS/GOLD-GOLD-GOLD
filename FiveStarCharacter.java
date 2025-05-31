@@ -1,9 +1,6 @@
 public class FiveStarCharacter extends Character {
-    private boolean eventCharacter;
-
-    public FiveStarCharacter(String name, int rarity, boolean eventCharacter) {
+    public FiveStarCharacter(String name, int rarity) {
         super(name, rarity);
-        this.eventCharacter = eventCharacter;
     }
 
     public String getName() {
@@ -12,9 +9,5 @@ public class FiveStarCharacter extends Character {
 
     public int getRarity() {
         return super.getRarity();
-    }
-
-    public boolean getEventCharacter() {
-        return eventCharacter;
     }
 }

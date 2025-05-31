@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Gacha {
-    private String name;
+
+    private final String name;
 
     private static boolean LostFiftyFifty = false;
 
@@ -46,13 +47,10 @@ public class Gacha {
     }
 
     public Character pull() {
-        /*
-        TODO: Pity system
-        */
-        return new Character("poo poo", 3);
+        return null;
     }
 
     public Character[] tenPull() {
-        return new Character[10];
+        return null;
     }
 }
