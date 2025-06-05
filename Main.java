@@ -134,12 +134,16 @@ public class Main {
                 Character pull = gacha.pull();
                 printPullAnimation(getStar(pull));
                 printCharacter(pull);
+                cp("Press Enter to continue...", ColorPrint.RESET_TEXT);
+                io.nextLine();
             } else if (option == 2) {
                 Character[] pulls = gacha.tenPull();
                 printPullAnimation(getStar(pulls));
                 for (Character pull : pulls) {
                     printCharacter(pull);
                 }
+                cp("Press Enter to continue...", ColorPrint.RESET_TEXT);
+                io.nextLine();
             } else if (option == 3) {
                 displayStats();
                 cp("\nPress Enter to continue...", ColorPrint.RESET_TEXT);
